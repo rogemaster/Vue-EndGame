@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import mongoose from 'mongoose';
 import detectPort from 'detect-port';
 import chalk from 'chalk';
+import dotenv from 'dotenv';
 
 // api
 import auth from './api/auth.js';
@@ -15,13 +16,15 @@ import docs from './utils/api-doc.js';
 // utils
 import { authenticateUser } from './utils/auth.js';
 
+dotenv.config();
+
 // mongo db
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-mongoose.connect(
-  'mongodb+srv://test:1234@cluster0-ypgh5.mongodb.net/test?retryWrites=true&w=majority',
+mongoose.connect(process.env.MONGODB_URI,
   {
     useNewUrlParser: true,
+    useUnifiedTopology: true
   },
 );
 mongoose.Promise = global.Promise;
