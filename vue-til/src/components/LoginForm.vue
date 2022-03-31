@@ -8,14 +8,17 @@
       <label for="password">PW: </label>
       <input id="password" type="text" v-model="password" />
     </div>
-    <button type="submit">LOGIN</button>
+    <button type="submit" :disabled="!isUserNameValid || !password">
+      LOGIN
+    </button>
     <p>{{ logMessage }}</p>
+    <button type="button" @click="test">1212</button>
   </form>
 </template>
 
 <script>
 import { loginUser } from '@/api/index';
-// import { validateEmail } from '@/utils/validation/vue';
+import { validateEmail } from '@/utils/validation';
 
 export default {
   data() {
@@ -25,6 +28,12 @@ export default {
       logMessage: '',
     };
   },
+
+  // computed: {
+  //   isUserNameValid() {
+  //     return validateEmail(this.username);
+  //   },
+  // },
 
   methods: {
     async submitForm() {
@@ -48,6 +57,10 @@ export default {
     initForm() {
       this.username = '';
       this.password = '';
+    },
+
+    test() {
+      console.log(validateEmail(this.username));
     },
   },
 };
