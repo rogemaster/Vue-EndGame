@@ -11,8 +11,6 @@
     <button type="submit" :disabled="!isUserNameValid || !password">
       LOGIN
     </button>
-    <p>{{ logMessage }}</p>
-    <button type="button" @click="test">1212</button>
   </form>
 </template>
 
@@ -25,15 +23,14 @@ export default {
     return {
       username: '',
       password: '',
-      logMessage: '',
     };
   },
 
-  // computed: {
-  //   isUserNameValid() {
-  //     return validateEmail(this.username);
-  //   },
-  // },
+  computed: {
+    isUserNameValid() {
+      return validateEmail(this.username);
+    },
+  },
 
   methods: {
     async submitForm() {
@@ -44,8 +41,7 @@ export default {
         };
 
         const { data } = await loginUser(userData);
-        console.log(data.user.username);
-        this.logMessage = `${data.user.username} 님 환영 합니다.`;
+        this.$store.commit('SET_USERNAME', data.user.username);
         this.initForm();
       } catch (error) {
         this.logMessage = error.response.data;
@@ -57,10 +53,6 @@ export default {
     initForm() {
       this.username = '';
       this.password = '';
-    },
-
-    test() {
-      console.log(validateEmail(this.username));
     },
   },
 };

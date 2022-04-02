@@ -1,8 +1,11 @@
 <template>
   <header>
     <header>
-      <router-link to="/login">로그인</router-link> |
-      <router-link to="/signup">회원가입</router-link>
+      <div>
+        <span>{{ $store.username }}</span>
+        <router-link to="/login">로그인</router-link> |
+        <router-link to="/signup">회원가입</router-link>
+      </div>
     </header>
   </header>
 </template>

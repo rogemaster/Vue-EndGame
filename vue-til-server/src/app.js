@@ -21,12 +21,10 @@ dotenv.config();
 // mongo db
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-mongoose.connect(process.env.MONGODB_URI,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  },
-);
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 mongoose.Promise = global.Promise;
 
 // server setup
