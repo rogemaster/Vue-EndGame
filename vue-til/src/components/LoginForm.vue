@@ -41,7 +41,8 @@ export default {
         };
 
         const { data } = await loginUser(userData);
-        this.$store.commit('SET_USERNAME', data.user.username);
+        this.$store.commit('SET_UserName', data.user.username);
+        this.$store.commit('SET_Token', data.token);
         this.initForm();
       } catch (error) {
         this.logMessage = error.response.data;
