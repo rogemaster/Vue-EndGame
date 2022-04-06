@@ -17,6 +17,7 @@
 <script>
 import { loginUser } from '@/api/index';
 import { validateEmail } from '@/utils/validation';
+import { saveAuthToCookie, saveUserToCookie } from '@/utils/cookies';
 
 export default {
   data() {
@@ -43,6 +44,10 @@ export default {
         const { data } = await loginUser(userData);
         this.$store.commit('SET_UserName', data.user.username);
         this.$store.commit('SET_Token', data.token);
+
+        saveAuthToCookie(data.token);
+        saveUserToCookie(data.user.username);
+
         this.$router.push({ path: '/main' });
 
         this.initForm();

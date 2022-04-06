@@ -1,12 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import { getUserFormCookie, getAuthFormCookie } from '@/utils/cookies';
+import {} from '@/api/index';
+import { saveAuthToCookie, saveUserToCookie } from '@/utils/cookies';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    username: '',
-    token: '',
+    username: getUserFormCookie() || '',
+    token: getAuthFormCookie() || '',
   },
 
   getters: {
@@ -26,6 +29,19 @@ export default new Vuex.Store({
 
     SET_Token(state, token) {
       state.token = token;
+    },
+  },
+
+  actions: {
+    async LOGIN({ commit }, userData) {
+      const { data } = await loginUser(userData);
+      this.$store.commit('SET_UserName', data.user.username);
+      this.$store.commit('SET_Token', data.token);
+
+      saveAuthToCookie(data.token);
+      saveUserToCookie(data.user.username);
+
+      return data;
     },
   },
 });
