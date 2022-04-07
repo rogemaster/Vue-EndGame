@@ -1,14 +1,19 @@
 <template>
   <div>
-    <h1>Today I Learned</h1>
-    <div v-if="isLoading">Loading</div>
-    <ul v-else>
-      <PostListItem
-        v-for="postItem in postItems"
-        :key="postItem._id"
-        :item="postItem"
-      />
-    </ul>
+    <div>
+      <h1>Today I Learned</h1>
+      <div v-if="isLoading">Loading</div>
+      <ul v-else>
+        <PostListItem
+          v-for="postItem in postItems"
+          :key="postItem._id"
+          :item="postItem"
+        />
+      </ul>
+    </div>
+    <router-link to="/add">
+      +
+    </router-link>
   </div>
 </template>
 

@@ -1,5 +1,3 @@
-import { getUserFormCookie, getAuthFormCookie } from '@/utils/cookies';
-
 function saveAuthToCookie(value) {
   document.cookie = `til_auth=${value}`;
 }
@@ -9,7 +7,7 @@ function saveUserToCookie(value) {
 }
 
 function getAuthFormCookie() {
-  document.cookie.replace(
+  return document.cookie.replace(
     /(?:(:^|.*;\s*)til_auth\s*=\s*([^;]*).*$)|^.*$/,
     '$1',
   );
@@ -17,7 +15,7 @@ function getAuthFormCookie() {
 
 function getUserFormCookie() {
   return document.cookie.replace(
-    /(?:(:^|.*;\s*)til_auth\s*=\s*([^;]*).*$)|^.*$/,
+    /(?:(:^|.*;\s*)til_user\s*=\s*([^;]*).*$)|^.*$/,
     '$1',
   );
 }

@@ -15,9 +15,8 @@
 </template>
 
 <script>
-import { loginUser } from '@/api/index';
 import { validateEmail } from '@/utils/validation';
-import { saveAuthToCookie, saveUserToCookie } from '@/utils/cookies';
+import { mapActions } from 'vuex';
 
 export default {
   data() {
@@ -31,6 +30,7 @@ export default {
     isUserNameValid() {
       return validateEmail(this.username);
     },
+    ...mapActions(['LOGIN']),
   },
 
   methods: {
@@ -41,13 +41,7 @@ export default {
           password: this.password,
         };
 
-        const { data } = await loginUser(userData);
-        this.$store.commit('SET_UserName', data.user.username);
-        this.$store.commit('SET_Token', data.token);
-
-        saveAuthToCookie(data.token);
-        saveUserToCookie(data.user.username);
-
+        await this.$store.dispatch('LOGIN', userData);
         this.$router.push({ path: '/main' });
 
         this.initForm();

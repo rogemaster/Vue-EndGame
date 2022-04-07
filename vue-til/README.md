@@ -1,6 +1,5 @@
 # Vue.js 학습 노트 애플리케이션
-
-
+ - 아이오닉 아이콘 사이트(https://ionic.io/ionicons/usage)
 
 ## 기술 스택
 
