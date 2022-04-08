@@ -1,19 +1,24 @@
 <template>
-  <div>
+  <div class="contents">
     <h1>Create Post</h1>
-    <div>
-      <form @submit.prevent="submitForm">
+    <div class="form-wrapper">
+      <form @submit.prevent="submitForm" class="form">
         <div>
           <label for="title">Title: </label>
           <input id="title" type="text" v-model="title" />
         </div>
         <div>
-          <label for="content">Contents: </label>
+          <label for="contents">Contents: </label>
           <textarea id="contents" type="text" rows="5" v-model="contents" />
+          <p class="validation-text">
+            <span v-if="!isContentsValid" class="warning">
+              Maximum Length is 50
+            </span>
+          </p>
         </div>
-        <button type="submit">Create</button>
+        <button class="btn" type="submit">Create</button>
       </form>
-      <p>
+      <p class="log">
         {{ logMessage }}
       </p>
     </div>
@@ -21,7 +26,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { createPost } from '@/api/posts';
 
 export default {
   data() {
@@ -33,7 +38,9 @@ export default {
   },
 
   computed: {
-    ...mapActions(['']),
+    isContentsValid() {
+      return this.contents.length < 200;
+    },
   },
 
   methods: {
@@ -42,18 +49,36 @@ export default {
         title: this.title,
         contents: this.contents,
       };
-      const response = await this.$store.dispatch('', postData);
-      console.log(response);
+
+      try {
+        await createPost(postData);
+        this.$router.push({ path: '/main' });
+      } catch (error) {
+        this.logMessage = 'Duplicated Data';
+      }
     },
   },
 };
 </script>
 
 <style scoped>
-.form-wrapper {
-  width: 100%;
+.form textarea {
+  margin-bottom: 0;
+}
+.form .validation-text {
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+.form .validation-text.reverse {
+  flex-direction: row;
 }
 .btn {
   color: white;
+}
+.log {
+  width: 420px;
 }
 </style>

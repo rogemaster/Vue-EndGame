@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main form-container">
     NotFoundPage
   </div>
 </template>

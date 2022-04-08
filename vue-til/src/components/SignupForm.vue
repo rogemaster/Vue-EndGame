@@ -1,24 +1,28 @@
 <template>
-  <form @submit.prevent="submitForm">
-    <div>
-      <label for="username">ID: </label>
-      <input id="username" type="text" v-model="username" />
+  <div class="contents">
+    <div class="form-wrapper form-wrapper-sm">
+      <form @submit.prevent="submitForm" class="form">
+        <div>
+          <label for="username">ID: </label>
+          <input id="username" type="text" v-model="username" />
+        </div>
+        <div>
+          <label for="password">PW: </label>
+          <input id="password" type="text" v-model="password" />
+        </div>
+        <div>
+          <label for="nickname">NICK: </label>
+          <input id="nickname" type="text" v-model="nickname" />
+        </div>
+        <button class="btn" type="submit">SIGN UP</button>
+        <p>{{ logMessage }}</p>
+      </form>
     </div>
-    <div>
-      <label for="password">PW: </label>
-      <input id="password" type="text" v-model="password" />
-    </div>
-    <div>
-      <label for="nickname">NICK: </label>
-      <input id="nickname" type="text" v-model="nickname" />
-    </div>
-    <button type="submit">SIGN UP</button>
-    <p>{{ logMessage }}</p>
-  </form>
+  </div>
 </template>
 
 <script>
-import { registerUser } from '@/api/index';
+import { registerUser } from '@/api/auth';
 
 export default {
   data() {
@@ -54,4 +58,23 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.form {
+  width: 460px;
+  height: 100%;
+}
+.form .validation-text {
+  margin-top: -0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+}
+.btn {
+  color: white;
+}
+.log {
+  width: 460px;
+}
+</style>

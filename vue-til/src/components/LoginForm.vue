@@ -1,17 +1,28 @@
 <template>
-  <form @submit.prevent="submitForm">
-    <div>
-      <label for="username">ID: </label>
-      <input id="username" type="text" v-model="username" />
+  <div class="contnets">
+    <div class="form-wrapper form-wrapper-sm">
+      <form @submit.prevent="submitForm" class="form">
+        <div>
+          <label for="username">ID: </label>
+          <input id="username" type="text" v-model="username" />
+        </div>
+        <div>
+          <label for="password">PW: </label>
+          <input id="password" type="text" v-model="password" />
+        </div>
+        <button
+          class="btn"
+          type="submit"
+          :disabled="!isUserNameValid || !password"
+        >
+          LOGIN
+        </button>
+      </form>
+      <p class="log">
+        {{ logMessage }}
+      </p>
     </div>
-    <div>
-      <label for="password">PW: </label>
-      <input id="password" type="text" v-model="password" />
-    </div>
-    <button type="submit" :disabled="!isUserNameValid || !password">
-      LOGIN
-    </button>
-  </form>
+  </div>
 </template>
 
 <script>
@@ -23,6 +34,7 @@ export default {
     return {
       username: '',
       password: '',
+      logMessage: '',
     };
   },
 
@@ -60,4 +72,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.btn {
+  color: white;
+}
+</style>
