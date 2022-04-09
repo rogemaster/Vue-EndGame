@@ -1,25 +1,28 @@
 <template>
   <header>
     <div>
-      <router-link to="/" class="logo">
+      <router-link :to="isLogin ? '/main' : '/login'" class="logo">
         TIL
         <span v-if="isLogin">by {{ $store.state.username }}</span>
       </router-link>
-      <div class="navigations">
-        <template v-if="!isLogin">
-          <router-link to="/login">로그인</router-link> |
-          <router-link to="/signup">회원가입</router-link>
-        </template>
-        <template v-else>
-          <a href="javascript:;" class="logout-button">Logout</a>
-        </template>
-      </div>
+    </div>
+    <div class="navigations">
+      <template v-if="!isLogin">
+        <router-link to="/login">로그인</router-link> |
+        <router-link to="/signup">회원가입</router-link>
+      </template>
+      <template v-else>
+        <a href="javascript:;" class="logout-button" @click="logoutUser">
+          Logout
+        </a>
+      </template>
     </div>
   </header>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import { deleteCookie } from '@/utils/cookies';
 
 export default {
   computed: {
@@ -29,6 +32,9 @@ export default {
   methods: {
     logoutUser() {
       this.$store.commit('SET_ClearUserName');
+      this.$store.commit('clearToken');
+      deleteCookie('til_auth');
+      deleteCookie('til_user');
       this.$router.push({ path: '/' });
     },
   },

@@ -30,6 +30,10 @@ export default new Vuex.Store({
     SET_Token(state, token) {
       state.token = token;
     },
+
+    clearToken(state) {
+      state.token = '';
+    },
   },
 
   actions: {
